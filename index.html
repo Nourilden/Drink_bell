@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DrinkBell</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2738/2738896.png">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>DrinkBell</h1>
+      <p>Select a drink and additions to send a request</p>
+    </header>
+
+    <main>
+      <section class="drink-selection">
+        <h2>Select Drink</h2>
+        <div class="drink-options">
+          <div class="drink-option" data-drink="Coffee">
+            <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D%2250%22%20height%3D%2250%22%20viewBox%3D%220%200%2050%2050%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%2210%22%20y%3D%2210%22%20width%3D%2230%22%20height%3D%2235%22%20rx%3D%223%22%20fill%3D%22%236F4E37%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%2215%22%20y%3D%225%22%20width%3D%2220%22%20height%3D%225%22%20rx%3D%221%22%20fill%3D%22%23DDDDDD%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2225%22%20y%3D%2230%22%20font-size%3D%228%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%3Ecoffee%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E" alt="Coffee">
+            <span>Coffee</span>
+          </div>
+          <div class="drink-option" data-drink="Tea">
+            <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D%2250%22%20height%3D%2250%22%20viewBox%3D%220%200%2050%2050%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%2210%22%20y%3D%2210%22%20width%3D%2230%22%20height%3D%2235%22%20rx%3D%223%22%20fill%3D%22%23B5651D%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%2215%22%20y%3D%225%22%20width%3D%2220%22%20height%3D%225%22%20rx%3D%221%22%20fill%3D%22%23DDDDDD%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2225%22%20y%3D%2230%22%20font-size%3D%228%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%3Etea%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E" alt="Tea">
+            <span>Tea</span>
+          </div>
+          <div class="drink-option" data-drink="Hibiscus">
+            <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D%2250%22%20height%3D%2250%22%20viewBox%3D%220%200%2050%2050%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%2210%22%20y%3D%2210%22%20width%3D%2230%22%20height%3D%2235%22%20rx%3D%223%22%20fill%3D%22%23FF3855%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%2215%22%20y%3D%225%22%20width%3D%2220%22%20height%3D%225%22%20rx%3D%221%22%20fill%3D%22%23DDDDDD%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2225%22%20y%3D%2230%22%20font-size%3D%228%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%3Ehibiscus%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E" alt="Hibiscus">
+            <span>Hibiscus</span>
+          </div>
+          <div class="drink-option" data-drink="Soft Drink">
+            <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D%2250%22%20height%3D%2250%22%20viewBox%3D%220%200%2050%2050%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%2210%22%20y%3D%2210%22%20width%3D%2230%22%20height%3D%2235%22%20rx%3D%223%22%20fill%3D%22%231E90FF%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%2215%22%20y%3D%225%22%20width%3D%2220%22%20height%3D%225%22%20rx%3D%221%22%20fill%3D%22%23DDDDDD%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2225%22%20y%3D%2230%22%20font-size%3D%228%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%3Esoft%20drink%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E" alt="Soft Drink">
+            <span>Soft Drink</span>
+          </div>
+          <div class="drink-option" data-drink="Water">
+            <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D%2250%22%20height%3D%2250%22%20viewBox%3D%220%200%2050%2050%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%2210%22%20y%3D%2210%22%20width%3D%2230%22%20height%3D%2235%22%20rx%3D%223%22%20fill%3D%22%2387CEEB%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%2215%22%20y%3D%225%22%20width%3D%2220%22%20height%3D%225%22%20rx%3D%221%22%20fill%3D%22%23DDDDDD%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2225%22%20y%3D%2230%22%20font-size%3D%228%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%3Ewater%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E" alt="Water">
+            <span>Water</span>
+          </div>
+          <div class="drink-option" data-drink="Juice">
+            <img src="data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D%2250%22%20height%3D%2250%22%20viewBox%3D%220%200%2050%2050%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%2210%22%20y%3D%2210%22%20width%3D%2230%22%20height%3D%2235%22%20rx%3D%223%22%20fill%3D%22%23FFA500%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3Crect%20x%3D%2215%22%20y%3D%225%22%20width%3D%2220%22%20height%3D%225%22%20rx%3D%221%22%20fill%3D%22%23DDDDDD%22%20%2F%3E%0A%20%20%20%20%20%20%20%20%3Ctext%20x%3D%2225%22%20y%3D%2230%22%20font-size%3D%228%22%20text-anchor%3D%22middle%22%20fill%3D%22white%22%3Ejuice%3C%2Ftext%3E%0A%20%20%20%20%3C%2Fsvg%3E" alt="Juice">
+            <span>Juice</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="additions-selection">
+        <h2>Select Additions</h2>
+        <div class="additions-options">
+          <div class="addon-option" data-addon="Sugar">
+            <span>Sugar</span>
+          </div>
+          <div class="addon-option" data-addon="Milk">
+            <span>Milk</span>
+          </div>
+          <div class="addon-option" data-addon="Ice">
+            <span>Ice</span>
+          </div>
+          <div class="addon-option" data-addon="Lemon">
+            <span>Lemon</span>
+          </div>
+        </div>
+
+        <div class="custom-addition">
+          <label for="customAddonInput">Custom Addition:</label>
+          <input type="text" id="customAddonInput" placeholder="Enter custom addition">
+          <button id="add-custom">Add</button>
+        </div>
+
+        <div id="custom-additions-list"></div>
+      </section>
+
+      <section class="request-section">
+        <button id="send-request">Send Request</button>
+        <div class="container">
+          <div class="status-box" id="statusBox">Selected: None<br>Additions: None</div>
+        </div>
+      </section>
+    </main>
+
+    <div id="notification" class="notification">
+      <div class="notification-content">
+        <h3>Request Sent!</h3>
+        <p>Your drink request has been sent successfully.</p>
+        <p>A notification has been sent to the recipient's phone.</p>
+        <button id="close-notification">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+// Initialize EmailJS with your User ID
+(function() {
+  emailjs.init("LUoDMEQQhr_ja3Ec3"); // Replace with your actual EmailJS User ID
+})();
+
+// DOM Elements
+const drinkOptions = document.querySelectorAll('.drink-option');
+const addonOptions = document.querySelectorAll('.addon-option');
+const customAddonInput = document.getElementById('customAddonInput');
+const addCustomBtn = document.getElementById('add-custom');
+const customAddonsList = document.getElementById('custom-additions-list');
+const sendRequestBtn = document.getElementById('send-request');
+const statusBox = document.getElementById('statusBox');
+const notification = document.getElementById('notification');
+const closeNotificationBtn = document.getElementById('close-notification');
+
+// Selected drink and additions
+let selectedDrink = null;
+let selectedAddons = [];
+let customAddons = [];
+
+// Get the currently selected drink
+function getSelectedDrink() {
+  const selected = document.querySelector('.drink-option.selected');
+  return selected ? selected.dataset.drink : null;
+}
+
+// Get all selected additions
+function getSelectedAddons() {
+  return Array.from(document.querySelectorAll('.addon-option.selected'))
+              .map(el => el.dataset.addon);
+}
+
+// Send the drink request via EmailJS
+function sendRequest() {
+  selectedDrink = getSelectedDrink();
+  selectedAddons = getSelectedAddons();
+  
+  const customAddon = customAddonInput.value.trim();
+  if (customAddon) {
+    selectedAddons.push(customAddon);
+  }
+
+  // Add any custom additions from the list
+  selectedAddons = [...selectedAddons, ...customAddons];
+
+  if (!selectedDrink) {
+    alert("Please select a drink first!");
+    return;
+  }
+
+  // Prepare request data
+  const requestData = {
+    drink: selectedDrink,
+    additions: selectedAddons.length ? selectedAddons.join(", ") : "None",
+    time: new Date().toLocaleString()
+  };
+
+  // Update status box
+  statusBox.innerHTML = `Selected: ${selectedDrink}<br>Additions: ${requestData.additions}`;
+
+  // Send email using EmailJS
+  emailjs.send('service_0xj5szc', 'template_5kk3fkg', requestData)
+    .then(function(response) {
+      console.log('Email sent successfully!', response);
+      showNotification();
+      resetSelections();
+    }, function(error) {
+      console.error('Failed to send email:', error);
+      alert('Failed to send request. Please try again.');
+    });
+}
+
+// Show success notification
+function showNotification() {
+  notification.classList.add('show');
+}
+
+// Close notification
+function closeNotification() {
+  notification.classList.remove('show');
+}
+
+// Reset all selections
+function resetSelections() {
+  // Clear drink selection
+  document.querySelectorAll('.drink-option').forEach(el => el.classList.remove('selected'));
+  
+  // Clear addition selections
+  document.querySelectorAll('.addon-option').forEach(el => el.classList.remove('selected'));
+  
+  // Clear custom additions
+  customAddonInput.value = '';
+  customAddons = [];
+  customAddonsList.innerHTML = '';
+}
+
+// Add custom addition to the list
+function addCustomAddition() {
+  const addition = customAddonInput.value.trim();
+  if (addition) {
+    customAddons.push(addition);
+    
+    const additionItem = document.createElement('div');
+    additionItem.className = 'custom-addon-item';
+    additionItem.innerHTML = `
+      <span>${addition}</span>
+      <button class="remove-addon">×</button>
+    `;
+    
+    customAddonsList.appendChild(additionItem);
+    customAddonInput.value = '';
+    
+    // Add click event to remove button
+    additionItem.querySelector('.remove-addon').addEventListener('click', function() {
+      const index = customAddons.indexOf(addition);
+      if (index > -1) {
+        customAddons.splice(index, 1);
+      }
+      additionItem.remove();
+    });
+  }
+}
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', function() {
+  // Drink selection
+  drinkOptions.forEach(option => {
+    option.addEventListener('click', function() {
+      drinkOptions.forEach(opt => opt.classList.remove('selected'));
+      this.classList.add('selected');
+    });
+  });
+
+  // Addition selection
+  addonOptions.forEach(option => {
+    option.addEventListener('click', function() {
+      this.classList.toggle('selected');
+    });
+  });
+
+  // Add custom addition
+  addCustomBtn.addEventListener('click', addCustomAddition);
+  
+  // Allow adding custom addition with Enter key
+  customAddonInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      addCustomAddition();
+    }
+  });
+
+  // Send request
+  sendRequestBtn.addEventListener('click', sendRequest);
+  
+  // Close notification
+  closeNotificationBtn.addEventListener('click', closeNotification);
+});
+  </script>
+</body>
+</html>
