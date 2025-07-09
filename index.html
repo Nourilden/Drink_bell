@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
   <title>DrinkBell</title>
   <link rel="stylesheet" href="styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
-  <link rel="icon" href="https://jmp.sh/s/dIgttI6zB7P5RhQnHFjw">
+  <link rel="icon" href="Drinkbell.ico" type="image/icon">
 </head>
 <body>
   <div class="container">
     <header>
       <h1>DrinkBell</h1>
       <p>Select a drink and additions to send a request</p>
+      <button id="lang-toggle" style="position:absolute;top:20px;left:20px;">EN</button>
     </header>
 
     <main>
@@ -72,11 +73,19 @@
       </section>
 
       <section class="request-section">
-        <button id="send-request">Send Request</button>
-        <div class="container">
-          <div class="status-box" id="statusBox">Selected: None<br>Additions: None</div>
-        </div>
-      </section>
+  <div class="name-section">
+    <label for="nameInput">الاسم:</label>
+    <input type="text" id="nameInput" placeholder="أدخل اسمك">
+  </div>
+  <div class="comment-section">
+    <label for="commentInput">تعليق إضافي:</label>
+    <textarea id="commentInput" placeholder="اكتب تعليقك هنا"></textarea>
+  </div>
+  <div class="container">
+    <div class="status-box" id="statusBox">Selected: None<br>Additions: None</div>
+  </div>
+  <button id="send-request">Send Request</button>
+</section>
     </main>
 
     <div id="notification" class="notification">
@@ -127,39 +136,43 @@ function getSelectedAddons() {
 function sendRequest() {
   selectedDrink = getSelectedDrink();
   selectedAddons = getSelectedAddons();
-  
+
   const customAddon = customAddonInput.value.trim();
   if (customAddon) {
     selectedAddons.push(customAddon);
   }
-
-  // Add any custom additions from the list
   selectedAddons = [...selectedAddons, ...customAddons];
 
   if (!selectedDrink) {
-    alert("Please select a drink first!");
+    alert("يرجى اختيار مشروب أولاً!");
     return;
   }
 
+  // Get comment value
+  const comment = document.getElementById('commentInput').value.trim();
+
+  // Get name value
+  const name = document.getElementById('nameInput').value.trim();
+
   // Prepare request data
   const requestData = {
+    name: name || "غير معروف",
     drink: selectedDrink,
-    additions: selectedAddons.length ? selectedAddons.join(", ") : "None",
+    additions: selectedAddons.length ? selectedAddons.join(", ") : "بدون إضافات",
+    comment: comment ? comment : "بدون تعليق",
     time: new Date().toLocaleString()
   };
 
   // Update status box
-  statusBox.innerHTML = `Selected: ${selectedDrink}<br>Additions: ${requestData.additions}`;
+  statusBox.innerHTML = `المشروب المختار: ${selectedDrink}<br>الإضافات: ${requestData.additions}<br>التعليق: ${requestData.comment}`;
 
   // Send email using EmailJS
   emailjs.send('service_0xj5szc', 'template_5kk3fkg', requestData)
     .then(function(response) {
-      console.log('Email sent successfully!', response);
       showNotification();
       resetSelections();
     }, function(error) {
-      console.error('Failed to send email:', error);
-      alert('Failed to send request. Please try again.');
+      alert('فشل في إرسال الطلب. حاول مرة أخرى.');
     });
 }
 
@@ -214,6 +227,96 @@ function addCustomAddition() {
   }
 }
 
+// Translations
+const translations = {
+  en: {
+    title: "DrinkBell",
+    selectDrink: "Select Drink",
+    selectAdditions: "Select Additions",
+    customAddition: "Custom Addition:",
+    customAdditionPlaceholder: "Enter custom addition",
+    add: "Add",
+    sendRequest: "Send Request",
+    selected: "Selected: None",
+    additions: "Additions: None",
+    commentLabel: "Additional Comment:",
+    commentPlaceholder: "Write your comment here",
+    requestSent: "Request Sent!",
+    requestSuccess: "Your drink request has been sent successfully.",
+    requestNotify: "A notification has been sent to the recipient's phone.",
+    close: "Close",
+    drinks: ["Coffee", "Tea", "Hibiscus", "Soft Drink", "Water", "Juice"],
+    addons: ["Sugar", "Milk", "Ice", "Lemon"]
+  },
+  ar: {
+    title: "جرس المشروبات",
+    selectDrink: "اختر المشروب",
+    selectAdditions: "اختر الإضافات",
+    customAddition: "إضافة مخصصة:",
+    customAdditionPlaceholder: "أدخل إضافة مخصصة",
+    add: "إضافة",
+    sendRequest: "إرسال الطلب",
+    selected: "لم يتم اختيار مشروب",
+    additions: "بدون إضافات",
+    commentLabel: "تعليق إضافي:",
+    commentPlaceholder: "اكتب تعليقك هنا",
+    requestSent: "تم إرسال الطلب!",
+    requestSuccess: "تم إرسال طلب المشروب بنجاح.",
+    requestNotify: "تم إرسال إشعار إلى هاتف المستلم.",
+    close: "إغلاق",
+    drinks: ["قهوة", "شاي", "كركديه", "مشروب غازي", "ماء", "عصير"],
+    addons: ["سكر", "حليب", "ثلج", "ليمون"]
+  }
+};
+
+function setLanguage(lang) {
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  document.querySelector("title").textContent = translations[lang].title;
+  document.querySelector("header h1").textContent = translations[lang].title;
+  document.querySelector("header p").textContent = lang === "ar"
+    ? "اختر مشروبًا والإضافات لإرسال الطلب"
+    : "Select a drink and additions to send a request";
+  document.querySelector(".drink-selection h2").textContent = translations[lang].selectDrink;
+  document.querySelector(".additions-selection h2").textContent = translations[lang].selectAdditions;
+  document.querySelector(".custom-addition label").textContent = translations[lang].customAddition;
+  document.getElementById("customAddonInput").placeholder = translations[lang].customAdditionPlaceholder;
+  document.getElementById("add-custom").textContent = translations[lang].add;
+  document.getElementById("send-request").textContent = translations[lang].sendRequest;
+  document.getElementById("statusBox").innerHTML = translations[lang].selected + "<br>" + translations[lang].additions;
+  document.querySelector(".comment-section label").textContent = translations[lang].commentLabel;
+  document.getElementById("commentInput").placeholder = translations[lang].commentPlaceholder;
+  document.querySelector("#notification h3").textContent = translations[lang].requestSent;
+  document.querySelector("#notification p:nth-of-type(1)").textContent = translations[lang].requestSuccess;
+  document.querySelector("#notification p:nth-of-type(2)").textContent = translations[lang].requestNotify;
+  document.getElementById("close-notification").textContent = translations[lang].close;
+
+  // Drinks
+  document.querySelectorAll('.drink-option').forEach((el, i) => {
+    el.querySelector('span').textContent = translations[lang].drinks[i];
+  });
+  // Addons
+  document.querySelectorAll('.addon-option').forEach((el, i) => {
+    el.querySelector('span').textContent = translations[lang].addons[i];
+  });
+
+  // Toggle button text
+  document.getElementById("lang-toggle").textContent = lang === "ar" ? "EN" : "AR";
+  // Save to localStorage
+  localStorage.setItem("lang", lang);
+}
+
+// Toggle language on button click
+document.getElementById("lang-toggle").addEventListener("click", function() {
+  const currentLang = localStorage.getItem("lang") || "ar";
+  setLanguage(currentLang === "ar" ? "en" : "ar");
+});
+
+// On page load, set language from localStorage or default to Arabic
+document.addEventListener("DOMContentLoaded", function() {
+  setLanguage(localStorage.getItem("lang") || "ar");
+});
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
   // Drink selection
@@ -248,5 +351,74 @@ document.addEventListener('DOMContentLoaded', function() {
   closeNotificationBtn.addEventListener('click', closeNotification);
 });
   </script>
+
+  <style>
+    .name-section {
+  margin: 20px 0 0 0;
+  background: #f9fafd;
+  border-radius: 10px;
+  padding: 14px 14px 10px 14px;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.name-section label {
+  font-weight: 600;
+  color: #1976d2;
+  margin-bottom: 4px;
+}
+
+.name-section input {
+  border: 1.5px solid #b0bec5;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 1.05em;
+  background: #fff;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.name-section input:focus {
+  border: 1.5px solid #1976d2;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+  outline: none;
+}
+
+.comment-section {
+  margin: 24px 0 16px 0;
+  background: #f9fafd;
+  border-radius: 10px;
+  padding: 18px 14px 10px 14px;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comment-section label {
+  font-weight: 600;
+  color: #1976d2;
+  margin-bottom: 4px;
+}
+
+.comment-section textarea {
+  border: 1.5px solid #b0bec5;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1.05em;
+  min-height: 60px;
+  max-height: 180px;
+  resize: vertical;
+  background: #fff;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.comment-section textarea:focus {
+  border: 1.5px solid #1976d2;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+  outline: none;
+}
+  </style>
 </body>
 </html>
